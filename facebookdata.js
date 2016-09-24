@@ -29,6 +29,7 @@ window.fbAsyncInit = function() {
         var accessToken = response.authResponse.accessToken;
         console.log(accessToken);
       testAPI();
+      getFriendData();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
