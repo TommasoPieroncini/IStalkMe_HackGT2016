@@ -64,8 +64,6 @@ window.fbAsyncInit = function() {
     statusChangeCallback(response);
   });
 
-  };
-
   // Load the SDK asynchronously
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
