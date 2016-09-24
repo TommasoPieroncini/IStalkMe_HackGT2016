@@ -26,6 +26,7 @@ window.fbAsyncInit = function() {
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+        var accessToken = response.authResponse.accessToken;
       testAPI();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
