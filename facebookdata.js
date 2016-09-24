@@ -92,3 +92,4 @@ window.fbAsyncInit = function() {
         'Thanks for logging in, ' + response.name + '!';
     });
   }
+  testAPI();
