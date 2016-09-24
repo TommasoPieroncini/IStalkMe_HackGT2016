@@ -27,7 +27,8 @@ window.fbAsyncInit = function() {
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
         var accessToken = response.authResponse.accessToken;
-      testAPI();
+      //testAPI();
+        testSentiment('/me/feed');
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -61,9 +62,6 @@ window.fbAsyncInit = function() {
   //
   // These three cases are handled in the callback function.
 
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
 
   // Load the SDK asynchronously
   (function(d, s, id) {
