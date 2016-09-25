@@ -49,7 +49,7 @@ function analyzeSentiment(year, str) {
         dataType: 'jsonp',
         jsonp: 'jsonp',
         type: "post",
-        data: { apikey: 'ede65e4d065c4fcc05268198d3bfe800f3293179', text: str, outputMode: 'json' },
+        data: { apikey: '901b949a211dff13752dca0a6c902853e9deca35', text: str, outputMode: 'json' },
         success: function(res){
             if (res["status"] === "OK") {
                 if (sentimentByYear[year] != null) {
@@ -83,7 +83,7 @@ function analyzeEmotion(year, str) {
         dataType: 'jsonp',
         jsonp: 'jsonp',
         type: "post",
-        data: { apikey: 'ede65e4d065c4fcc05268198d3bfe800f3293179', text: str, outputMode: 'json' },
+        data: { apikey: '901b949a211dff13752dca0a6c902853e9deca35', text: str, outputMode: 'json' },
         success: function(res){
             if (res["status"] === "OK") {
                 console.log(res);
