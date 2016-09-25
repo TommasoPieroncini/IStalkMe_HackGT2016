@@ -196,170 +196,123 @@
 
 
                 <div class="row-fluid">
+                    <script src="data/facebookdata.js"></script>
+                    <script src="data/sentimentanalysis.js"></script>
 
-			<div class="widget orange span5" ontablet="span5" ondesktop="span5" style="width: 170px">
+                    <div class="widget orange span5" id="joyspace" ontablet="span5" ondesktop="span5" style="width: 170px">
 					<h2><span class="glyphicons heart"><i></i></span> Joy</h2>
 					<hr>
 					<div class="content" style="width: 150px">
-						<div class="verticalChart" style="">
-							<div class="singleBar" style="width: 40px; margin: 5px">
-								<div class="bar">
-									<div class="value" style="height: 43%;">
-										<span style="color: rgb(226, 90, 89); display: inline;">43%</span>
-									</div>
-								</div>
-								<div class="title">2013</div>
-							</div>
-							<div class="singleBar" style="width: 40px; margin: 5px">
-								<div class="bar">
-									<div class="value" style="height: 97%;">
-										<span style="color: rgb(226, 90, 89); display: inline;">97%</span>
-									</div>
-								</div>
-								<div class="title">2015</div>
-							</div>
-							<div class="singleBar" style="width: 40px; margin: 5px">
-								<div class="bar">
-									<div class="value" style="height: 73%;">
-										<span style="color: rgb(226, 90, 89); display: inline;">73%</span>
-									</div>
-								</div>
-								<div class="title">2016</div>
-							</div>
-							<div class="clearfix" style="width: 402.781; height: 50;"></div>
+						<div class="verticalChart" id="joychart" style="">
+
+                            <script>
+                                function displayJoyData() {
+                                    var counter = 0;
+                                    for (var key in joyByYear) {
+                                        counter++;
+                                        $("#joychart").append('<div class="singleBar" style="width: 40px; margin: 5px"><div class="bar"><div class="value" style="height: '+Math.round(joyByYear[key]*100)+'%;"> <span style="color: rgb(226, 90, 89); display: inline;">'+Math.round(joyByYear[key]*100)+'%</span> </div> </div> <div class="title">'+key+'</div> </div>');
+                                    }
+                                    var w = 65 * counter;
+                                    if (counter < 3) {
+                                        w = 74 * counter;
+                                    }
+                                    document.getElementById('joyspace').style = 'width: ' + w + 'px';
+                                }
+                            </script>
+
 						</div>
 					</div></span> </div>
 
-					<div class="widget blue span5" ontablet="span5" ondesktop="span5" style="width: 170px">
+					<div class="widget blue span5" id="sadspace" ontablet="span5" ondesktop="span5" style="width: 170px">
 						<h2><span class="glyphicons leaf"><i></i></span> Sadness</h2>
 						<hr>
 						<div class="content" style="">
-							<div class="verticalChart" style="">
-								<div class="singleBar" style="width: 40px; margin: 5px">
-									<div class="bar">
-										<div class="value" style="height: 43%;">
-											<span style="color: rgb(226, 90, 89); display: inline;">43%</span>
-										</div>
-									</div>
-									<div class="title">2013</div>
-								</div>
-								<div class="singleBar" style="width: 40px; margin: 5px">
-									<div class="bar">
-										<div class="value" style="height: 97%;">
-											<span style="color: rgb(226, 90, 89); display: inline;">97%</span>
-										</div>
-									</div>
-									<div class="title">2015</div>
-								</div>
-								<div class="singleBar" style="width: 40px; margin: 5px">
-									<div class="bar">
-										<div class="value" style="height: 73%;">
-											<span style="color: rgb(226, 90, 89); display: inline;">73%</span>
-										</div>
-									</div>
-									<div class="title">2016</div>
-								</div>
+							<div class="verticalChart" id="sadchart" style="">
+                                <script>
+                                    function displaySadData() {
+                                        var counter = 0;
+                                        for (var key in sadnessByYear) {
+                                            counter++;
+                                            $("#sadchart").append('<div class="singleBar" style="width: 40px; margin: 5px"><div class="bar"><div class="value" style="height: '+Math.round(sadnessByYear[key]*100)+'%;"> <span style="color: rgb(226, 90, 89); display: inline;">'+Math.round(sadnessByYear[key]*100)+'%</span> </div> </div> <div class="title">'+key+'</div> </div>');
+                                        }
+                                        var w = 65 * counter;
+                                        if (counter < 3) {
+                                            w = 74 * counter;
+                                        }
+                                        document.getElementById('sadspace').style = 'width: ' + w + 'px';
+                                    }
+                                </script>
 								<div class="clearfix" style="width: 402.781; height: 50;"></div>
 							</div>
 						</div>
 					</div>
-						<div class="widget green span5" ontablet="span5" ondesktop="span5" style="width: 170px">
+						<div class="widget green span5" id="fearspace" ontablet="span5" ondesktop="span5" style="width: 170px">
 							<h2><span class="glyphicons candle"><i></i></span> Fear</h2>
 							<hr>
 							<div class="content" style="">
-								<div class="verticalChart" style="">
-									<div class="singleBar" style="width: 40px; margin: 5px">
-										<div class="bar">
-											<div class="value" style="height: 43%;">
-												<span style="color: rgb(226, 90, 89); display: inline;">43%</span>
-											</div>
-										</div>
-										<div class="title">2013</div>
-									</div>
-									<div class="singleBar" style="width: 40px; margin: 5px">
-										<div class="bar">
-											<div class="value" style="height: 97%;">
-												<span style="color: rgb(226, 90, 89); display: inline;">97%</span>
-											</div>
-										</div>
-										<div class="title">2015</div>
-									</div>
-									<div class="singleBar" style="width: 40px; margin: 5px">
-										<div class="bar">
-											<div class="value" style="height: 73%;">
-												<span style="color: rgb(226, 90, 89); display: inline;">73%</span>
-											</div>
-										</div>
-										<div class="title">2016</div>
-									</div>
+								<div class="verticalChart" id="fearchart" style="">
+                                    <script>
+                                        function displayFearData() {
+                                            var counter = 0;
+                                            for (var key in fearByYear) {
+                                                counter++;
+                                                $("#fearchart").append('<div class="singleBar" style="width: 40px; margin: 5px"><div class="bar"><div class="value" style="height: '+Math.round(fearByYear[key]*100)+'%;"> <span style="color: rgb(226, 90, 89); display: inline;">'+Math.round(fearByYear[key]*100)+'%</span> </div> </div> <div class="title">'+key+'</div> </div>');
+                                            }
+                                            var w = 65 * counter;
+                                            if (counter < 3) {
+                                                w = 74 * counter;
+                                            }
+                                            document.getElementById('fearspace').style = 'width: ' + w + 'px';
+                                        }
+                                    </script>
 									<div class="clearfix" style="width: 402.781; height: 50;"></div>
 								</div>
 							</div>
 
 						</div>
-							<div class="widget purple span5" ontablet="span5" ondesktop="span5" style="width: 170px" >
+							<div class="widget purple span5" id="disgustspace" ontablet="span5" ondesktop="span5" style="width: 170px" >
 								<h2><span class="glyphicons warning_sign"><i></i></span> Disgust</h2>
 								<hr>
 								<div class="content" style="">
-									<div class="verticalChart" style="">
-										<div class="singleBar" style="width: 40px; margin: 5px">
-											<div class="bar">
-												<div class="value" style="height: 43%;">
-													<span style="color: rgb(226, 90, 89); display: inline;">43%</span>
-												</div>
-											</div>
-											<div class="title">2013</div>
-										</div>
-										<div class="singleBar" style="width: 40px; margin: 5px">
-											<div class="bar">
-												<div class="value" style="height: 97%;">
-													<span style="color: rgb(226, 90, 89); display: inline;">97%</span>
-												</div>
-											</div>
-											<div class="title">2015</div>
-										</div>
-										<div class="singleBar" style="width: 40px; margin: 5px">
-											<div class="bar">
-												<div class="value" style="height: 73%;">
-													<span style="color: rgb(226, 90, 89); display: inline;">73%</span>
-												</div>
-											</div>
-											<div class="title">2016</div>
-										</div>
+									<div class="verticalChart" id="disgustchart" style="">
+                                        <script>
+                                            function displayDisgustData() {
+                                                var counter = 0;
+                                                for (var key in disgustByYear) {
+                                                    counter++;
+                                                    $("#disgustchart").append('<div class="singleBar" style="width: 40px; margin: 5px"><div class="bar"><div class="value" style="height: '+Math.round(disgustByYear[key]*100)+'%;"> <span style="color: rgb(226, 90, 89); display: inline;">'+Math.round(disgustByYear[key]*100)+'%</span> </div> </div> <div class="title">'+key+'</div> </div>');
+                                                }
+                                                var w = 65 * counter;
+                                                if (counter < 3) {
+                                                    w = 74 * counter;
+                                                }
+                                                document.getElementById('disgustspace').style = 'width: ' + w + 'px';
+                                            }
+                                        </script>
 										<div class="clearfix" style="width: 402.781; height: 50;"></div>
 									</div>
 								</div>
 
 							</div>
-								<div class="widget red span5" ontablet="span5" ondesktop="span5" style="width: 170px" >
+								<div class="widget red span5" id="angerspace" ontablet="span5" ondesktop="span5" style="width: 170px" >
 									<h2><span class="glyphicons fire"><i></i></span> Anger</h2>
 									<hr>
 									<div class="content" style="">
-										<div class="verticalChart" style="">
-											<div class="singleBar" style="width: 40px; margin: 5px">
-												<div class="bar">
-													<div class="value" style="height: 43%;">
-														<span id="angerValue"; style="color: rgb(226, 90, 89); display: inline;">43%</span>
-													</div>
-												</div>
-												<div class="title">2013</div>
-											</div>
-											<div class="singleBar" style="width: 40px; margin: 5px">
-												<div class="bar">
-													<div class="value" style="height: 97%;">
-														<span style="color: rgb(226, 90, 89); display: inline;">97%</span>
-													</div>
-												</div>
-												<div class="title">2015</div>
-											</div>
-											<div class="singleBar" style="width: 40px; margin: 5px">
-												<div class="bar">
-													<div class="value" style="height: 73%;">
-														<span style="color: rgb(226, 90, 89); display: inline;">73%</span>
-													</div>
-												</div>
-												<div class="title">2016</div>
-											</div>
+										<div class="verticalChart" id="angerchart" style="">
+                                            <script>
+                                                function displayAngerData() {
+                                                    var counter = 0;
+                                                    for (var key in angerByYear) {
+                                                        counter++;
+                                                        $("#angerchart").append('<div class="singleBar" style="width: 40px; margin: 5px"><div class="bar"><div class="value" style="height: '+Math.round(angerByYear[key]*100)+'%;"> <span style="color: rgb(226, 90, 89); display: inline;">'+Math.round(angerByYear[key]*100)+'%</span> </div> </div> <div class="title">'+key+'</div> </div>');
+                                                    }
+                                                    var w = 65 * counter;
+                                                    if (counter < 3) {
+                                                        w = 74 * counter;
+                                                    }
+                                                    document.getElementById('angerspace').style = 'width: ' + w + 'px';
+                                                }
+                                            </script>
 											<div class="clearfix" style="width: 402.781; height: 50;"></div>
 										</div>
 									</div>
@@ -368,7 +321,7 @@
 
 
 			</div>
-			<div class="row-fluid hideInIE8 circleStats">
+			<!--div class="row-fluid hideInIE8 circleStats">
 
 				<div class="span2" onTablet="span4" onDesktop="span2">
                 	<div class="circleStatsItemBox yellow">
@@ -497,7 +450,7 @@
 
 				</div>
 
-			</div>
+			</div-->
 			
 
 	</div><!--/.fluid-container-->
@@ -597,17 +550,7 @@
 
 		<script src="js/custom.js"></script>
 
-        <script src="data/facebookdata.js"></script>
-        <script src="data/sentimentanalysis.js"></script>
-
 	<!-- end: JavaScript-->
-
-        <script>
-            function displayData() {
-                console.log("afterwards");
-                document.getElementById("angerValue").innerHTML=Math.round(angerByYear[2013]*100)+'%';
-            }
-        </script>
 
 </body>
 </html>
