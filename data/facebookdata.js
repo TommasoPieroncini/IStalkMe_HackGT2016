@@ -30,7 +30,7 @@ window.fbAsyncInit = function() {
       //testAPI();
       getAllTags();
       testSentiment('/me/feed');
-      //showplacesdata();
+      showplacesdata();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       /*document.getElementById('status').innerHTML = 'Please log ' +
