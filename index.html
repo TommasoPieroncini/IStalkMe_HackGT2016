@@ -234,10 +234,12 @@
 						var latitudes = []
 						var longitudes = []
 						for (var marker in taggedPlaces) {
-							latitudes.push(taggedPlaces[marker].place.location.latitude)
-							longitudes.push(taggedPlaces[marker].place.location.longitude)
-							createMarker(taggedPlaces[marker].place.location.latitude, taggedPlaces[marker].place.location.longitude,
-									taggedPlaces[marker].place.location.city);
+						    if (taggedPlaces[marker].place.location) {
+                                latitudes.push(taggedPlaces[marker].place.location.latitude)
+                                longitudes.push(taggedPlaces[marker].place.location.longitude)
+                                createMarker(taggedPlaces[marker].place.location.latitude, taggedPlaces[marker].place.location.longitude,
+                                        taggedPlaces[marker].place.location.city);
+                            }
 						}
 						var latitude = average(latitudes);
 						var longitude = average(longitudes);
@@ -249,6 +251,9 @@
 						for (var i = 0; i < array.length; i++) {
 							sum = sum + array[i]
 						}
+						if (array.length == 0) {
+						    return 0
+                        }
 						return sum/parseFloat(array.length)
 					}
 					function createMarker(lat,lng,title) {
