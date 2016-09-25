@@ -24,6 +24,8 @@ function getFriendData() {
     var page4 = '/me/photos';
     iterateSharedTagsPhotos(page4);
 
+    sortMaps();
+
 }
 function iteratePhotos(page) {
     if (page != null) {
@@ -65,18 +67,13 @@ function iteratePhotoLikes(photo) {
 }
 
 function getPhotoLikes(like,year) {
-    console.log(year);
-    console.log(likesYearMap.has(year));
     if (!likesYearMap.has(year)) {
         likesYearMap.set(year, new Map());
-        console.log("added year to likesYearMap");
     }
     if (likesYearMap.get(year).has(like.name)) {
         likesYearMap.get(year).set(like.name, (likesYearMap.get(year).get(like.name) + 1));
-        console.log("increased existing name to likesYearMap");
     } else {
         likesYearMap.get(year).set(like.name,1);
-        console.log("added new name to likesYearMap");
     }
 }
 
@@ -189,11 +186,8 @@ function iteratePostLikes(post) {
 }
 
 function getPostLikes(like,year) {
-    console.log("Ran getPostLikes");
-    console.log(likesYearMap.has(year));
     if (!likesYearMap.has(year)) {
         likesYearMap.set(year, new Map());
-        console.log("added year to likesYearMap from posts");
     }
     if (likesYearMap.get(year).has(like.name)) {
         likesYearMap.get(year).set(like.name, likesYearMap.get(year).get(like.name) + 1);
@@ -228,5 +222,35 @@ function getPostComments(comment) {
     } else {
         commentsYearMap.get(year).set(comment.from.name, 1);
     }
+}
+
+function sortMaps() {
+    console.log("ran sortMaps");
+    likesYearMap.forEach(function(v,k) {
+        console.log("sortMap(likesYearMap)");
+        sortMap(v);
+    });
+    commentsYearMap.forEach(function(v,k) {
+        console.log("sortMap(commentsYearMap)");
+        sortMap(v);
+    });
+    tagsYearMap.forEach(function(v,k) {
+        console.log("sortMap(tagsYearMap)");
+        sortMap(v);
+    });
+
+
+}
+
+function sortMap(map) {
+    console.log("ran sortMap");
+    var sortable = [];
+    map.forEach(function(v,k) {
+        sortable.push([k,v]);
+    });
+    sortable.sort(function(a,b) {
+        return b[1] - a[1];
+    });
+    console.log(sortable);
 }
 
