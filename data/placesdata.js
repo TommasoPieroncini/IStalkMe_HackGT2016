@@ -4,8 +4,12 @@
 var taggedPlaces = new Array()
 function showplacesdata() {
     FB.api("/me?fields=location,hometown,tagged_places", function(response) {
-        console.log("Current Location: " + response.location.name)
-        console.log("Hometown: " + response.hometown.name)
+        if (response.location) {
+            console.log("Current Location: " + response.location.name)
+        }
+        if (response.hometown) {
+            console.log("Current Location: " + response.location.name)
+        }
         storeTaggedPlaces(response.tagged_places);
     });
 }
