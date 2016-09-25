@@ -413,21 +413,17 @@
 							<table class="table table-bordered table-striped">
 								<tbody id="tagsTable">
 								<script>
-									var buttons = ["btn btn-primary","btn btn-secondary","btn btn-success","btn btn-info","btn btn-warning","btn btn-danger"];
+									var buttons = ["btn btn-primary","btn btn-success","btn btn-info","btn btn-warning","btn btn-danger"];
 									function displayTags() {
 										console.log("TEST in html");
 										for (var year in yearlyTags) {
-											$("#tagsTable").append('<td>'+year+'</td>');
-											//console.log("try" + yearlyTags[year]);
 											for (var i = 0; i < 12; i++) {
 												if (i == 0 || i == 6) {
 													$("#tagsTable").append('<tr>');
 												}
-												//console.log(yearlyTags[year]);
-												//if (yearlyTags[year][i] != null) {
-													//console.log("YEAHHH" + yearlyTags[year][i]);
-													$("#tagsTable").append("<td><a href=" + (urlsByTag[year].get(yearlyTags[year][i][0]))[getRandomInt(0,urlsByTag[year].get(yearlyTags[year][i][0]).length - 1)] + " class='"+ buttons[getRandomInt(0,5)] +"' data-rel='popover' title='title' data-content=" + yearlyTags[year][i][0] + ">"+ yearlyTags[year][i][0] +"</a>");
-												//}
+												if (yearlyTags[year][i] != null) {
+													$("#tagsTable").append("<td><a href=" + (urlsByTag[year].get(yearlyTags[year][i][0]))[getRandomInt(0,urlsByTag[year].get(yearlyTags[year][i][0]).length - 1)] + " target='_blank' class='"+ buttons[getRandomInt(0,5)] +"' data-rel='popover' title data-original-title=" + yearlyTags[year][i][0] + " data-content=" + yearlyTags[year][i][0] + ">"+ yearlyTags[year][i][0] +"</a><p>"+ year +"</p>");
+												}
 												if (i == 0 || i == 6) {
 													$("#tagsTable").append('</tr>');
 												}
