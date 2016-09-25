@@ -65,15 +65,17 @@ function getFriendData() {
 function iteratePhotos(page) {
     if (page != null) {
         FB.api(page, function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var photo = response.data[i];
-                if (!(photoIDs.has(photo.id))) {
-                    iteratePhotoLikes(photo);
-                    iteratePhotoComments(photo);
-                    photoIDs.add(photo.id);
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var photo = response.data[i];
+                    if (!(photoIDs.has(photo.id))) {
+                        iteratePhotoLikes(photo);
+                        iteratePhotoComments(photo);
+                        photoIDs.add(photo.id);
+                    }
                 }
+                iteratePhotos(response.paging.next);
             }
-            iteratePhotos(response.paging.next);
         });
 
     } else {
@@ -84,12 +86,14 @@ function iteratePhotos(page) {
 
 function iteratePhotoLikes(photo) {
     if (photo != null) {
-        FB.api(photo.id.concat('/likes'), function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var like = response.data[i];
-                getPhotoLikes(like);
+        FB.api((photo.id) + '/likes', function(response) {
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var like = response.data[i];
+                    getPhotoLikes(like);
+                }
+                iteratePhotoLikes(response.paging.next);
             }
-            iteratePhotoLikes(response.paging.next);
         });
     } else {
         return;
@@ -108,12 +112,14 @@ function getPhotoLikes(like) {
 
 function iteratePhotoComments(photo) {
     if (photo != null) {
-        FB.api(photo.id.concat('/comments'), function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var comment = response.data[i];
-                getPhotoComments(comment);
+        FB.api(photo.id + '/comments', function(response) {
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var comment = response.data[i];
+                    getPhotoComments(comment);
+                }
+                iteratePhotoComments(response.paging.next);
             }
-            iteratePhotoLikes(response.paging.next);
         });
     } else {
         return;
@@ -151,11 +157,13 @@ function getPhotoComments(comment) {
 function iterateSharedTagsPhotos(page) {
     if (page != null) {
         FB.api(page, function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var photo = response.data[i];
-                iterateSharedTags(photo);
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var photo = response.data[i];
+                    iterateSharedTags(photo);
+                }
+                iterateSharedTagsPhotos(response.paging.next);
             }
-            iterateSharedTagsPhotos(response.paging.next);
         });
 
     } else {
@@ -165,12 +173,14 @@ function iterateSharedTagsPhotos(page) {
 
 function iterateSharedTags(photo) {
     if (photo != null) {
-        FB.api(photo.id.concat('/tags'), function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var tag = response.data[i];
-                getSharedTag(tag);
+        FB.api(photo.id + '/tags', function(response) {
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var tag = response.data[i];
+                    getSharedTag(tag);
+                }
+                iterateSharedTags(response.paging.next);
             }
-            iterateSharedTags(response.paging.next);
         });
     } else {
         return;
@@ -204,12 +214,14 @@ function getSharedTag(tag) {
 function iteratePosts(page) {
     if (page != null) {
         FB.api(page, function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var post = response.data[i];
-                iteratePostLikes(post);
-                iteratePostComments(post);
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var post = response.data[i];
+                    iteratePostLikes(post);
+                    iteratePostComments(post);
+                }
+                iteratePosts(response.paging.next);
             }
-            iteratePosts(response.paging.next);
         });
     } else {
         return;
@@ -218,12 +230,14 @@ function iteratePosts(page) {
 
 function iteratePostLikes(post) {
     if (post != null) {
-        FB.api(post.id.concat('/likes'), function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var like = response.data[i];
-                getPostLikes(like);
+        FB.api(post.id + '/likes', function(response) {
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var like = response.data[i];
+                    getPostLikes(like);
+                }
+                iteratePostLikes(response.paging.next);
             }
-            iteratePostLikes(response.paging.next);
         });
     } else {
         return;
@@ -256,12 +270,14 @@ function getPostLikes(like) {
 
 function iteratePostComments(post) {
     if (post != null) {
-        FB.api(post.id.concat('/comments'), function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var comment = response.data[i];
-                getPostComments(comment);
+        FB.api(post.id + '/comments', function(response) {
+            if (response.data != null && response.data.length != 0) {
+                for (var i = 0; i < response.data.length; i++) {
+                    var comment = response.data[i];
+                    getPostComments(comment);
+                }
+                iteratePostComments(response.paging.next);
             }
-            iteratePostComments(response.paging.next);
         });
     } else {
         return;
