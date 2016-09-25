@@ -54,9 +54,9 @@ function analyzeSentiment(year, str) {
             if (res["status"] === "OK") {
                 if (sentimentByYear[year] != null) {
                     var calc = (sentimentByYear[year] + res.docSentiment.score)/2;
-                    //if (!calc.isNaN()) {
+                    if (!isNaN(calc)) {
                         sentimentByYear[year] = calc;
-                    //}
+                    }
                 } else {
                     sentimentByYear[year] = res.docSentiment.score;
                 }
@@ -90,7 +90,7 @@ function analyzeEmotion(year, str) {
 
                 if (angerByYear[year] != null) {
                     var calc = (angerByYear[year] + res.docEmotions.anger)/2;
-                    if (!calc.isNaN()) {
+                    if (!isNaN(calc)) {
                         angerByYear[year] = calc;
                     }
                 } else {
@@ -98,7 +98,7 @@ function analyzeEmotion(year, str) {
                 }
                 if (disgustByYear[year] != null) {
                     var calc = (disgustByYear[year] + res.docEmotions.disgust)/2;
-                    if (!calc.isNaN()) {
+                    if (!isNaN(calc)) {
                         disgustByYear[year] = calc;
                     }
                 } else {
@@ -106,7 +106,7 @@ function analyzeEmotion(year, str) {
                 }
                 if (fearByYear[year] != null) {
                     var calc = (fearByYear[year] + res.docEmotions.fear)/2;
-                    if (!calc.isNaN()) {
+                    if (!isNaN(calc)) {
                         fearByYear[year] = calc;
                     }
                 } else {
@@ -114,7 +114,7 @@ function analyzeEmotion(year, str) {
                 }
                 if (joyByYear[year] != null) {
                     var calc = (joyByYear[year] + res.docEmotions.joy)/2;
-                    if (!calc.isNaN()) {
+                    if (!isNaN(calc)) {
                         joyByYear[year] = calc;
                     }
                 } else {
@@ -122,7 +122,7 @@ function analyzeEmotion(year, str) {
                 }
                 if (sadnessByYear[year] != null) {
                     var calc = (sadnessByYear[year] + res.docEmotions.sadness)/2;
-                    if (!calc.isNaN()) {
+                    if (!isNaN(calc)) {
                         sadnessByYear[year] = calc;
                     }
                 } else {
