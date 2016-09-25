@@ -54,9 +54,9 @@ function analyzeSentiment(year, str) {
             if (res["status"] === "OK") {
                 if (sentimentByYear[year] != null) {
                     var calc = (sentimentByYear[year] + res.docSentiment.score)/2;
-                    if (!calc.isNaN()) {
+                    //if (!calc.isNaN()) {
                         sentimentByYear[year] = calc;
-                    }
+                    //}
                 } else {
                     sentimentByYear[year] = res.docSentiment.score;
                 }
