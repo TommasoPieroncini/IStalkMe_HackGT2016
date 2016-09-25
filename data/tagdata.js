@@ -4,7 +4,8 @@
 var counter = 0;
 var tagsByYear = new Map();
 var urlsByTag = new Map();
-function getPhotos() {
+var yearlyTags = {};
+function getAllTags() {
     console.log('Fetching photo information.... ');
     getData('/me/photos?fields=images,created_time');
 }
@@ -21,10 +22,10 @@ function getData(next) {
 }
 
 function sortMaps() {
-    console.log("TESTING");
+    //console.log("TESTING");
     for (var year in tagsByYear) {
-        console.log(year);
-        sortMap(tagsByYear[year], urlsByTag[year]);
+        //console.log(year);
+        yearlyTags[year] = sortMap(tagsByYear[year], urlsByTag[year]);
     }
 }
 
@@ -37,23 +38,26 @@ function sortMap(myMap, myUrlsMap) {
         return b[1] - a[1];
     });
     console.log(sortable);
-    console.log(myUrlsMap);
+    return sortable;
+    //console.log(myUrlsMap);
 }
 
 function getTags(picUrl, created_time) {
     var year = created_time.substring(0, 4);
-    var clarifaiAccessToken = '9yINjGzI1lBO36PPPe1Fq5OvFvK0bs';
+    var clarifaiAccessToken = '2x4CSs9OjwwVRaU92Z6WJn7s8cgevJ';
     var encodedUrl = encodeURIComponent(picUrl);
-    if (!tagsByYear.has(year)) {
+    if (!tagsByYear.hasOwnProperty(year)) {
         tagsByYear[year] = new Map();
         urlsByTag[year] = new Map();
     }
     $.get('https://api.clarifai.com/v1/tag/?access_token=' + clarifaiAccessToken + '&url=' + encodedUrl, function(response) {
         response.results[0].result.tag.classes.forEach(function (arg){
-            console.log(year);
+            //console.log(year);
             if (tagsByYear[year].has(arg)) {
                 tagsByYear[year].set(arg, tagsByYear[year].get(arg) + 1);
-                urlsByTag[year].get(arg).push(picUrl);
+                if (urlsByTag[year].get(arg).length < 6) {
+                    urlsByTag[year].get(arg).push(picUrl);
+                }
             } else {
                 tagsByYear[year].set(arg, 1);
                 urlsByTag[year].set(arg, [picUrl]);
@@ -61,6 +65,7 @@ function getTags(picUrl, created_time) {
         });
     }).done(function() {
         counter++;
+        console.log(counter);
         sortMaps();
     });
 }

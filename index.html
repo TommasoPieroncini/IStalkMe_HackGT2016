@@ -40,6 +40,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="data/facebookdata.js" type="text/javascript"></script>
     <script src="data/sentimentanalysis.js" type="text/javascript"></script>
+	<script src="data/tagdata.js" type="text/javascript"></script>
 
 
 
@@ -321,6 +322,41 @@
 
 
 			</div>
+
+            <!-- TAG DATA -->
+            <div>
+                <script src="data/facebookdata.js"></script>
+                <script src="data/tagdata.js"></script>
+
+                <div>
+                    <div class="box span15">
+                        <div class="box-header">
+                            <h2>Your Picture Tags!</h2>
+                            <div class="box-icon">
+                                <a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <table id="tagsTable" class="table table-bordered table-striped">
+                                <script>
+                                    for (var year in yearlyTags) {
+                                        for (var i = 0; i < 2; i++) {
+                                            $("#tagsTable").append('<tr>');
+                                            for (var i = 0; i < 6; i++) {
+                                                $("#tagsTable").append('<td><a href="#" class="btn btn-danger" data-rel="popover" data-content=' + tagsByYear[year][i][0] + ' title="A Title">tagsByYear[year][i][0]</a>');
+                                            }
+                                            $("#tagsTable").append('</tr>');
+                                        }
+                                    }
+                                </script>
+
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			<!--div class="row-fluid hideInIE8 circleStats">
 
 				<div class="span2" onTablet="span4" onDesktop="span2">
