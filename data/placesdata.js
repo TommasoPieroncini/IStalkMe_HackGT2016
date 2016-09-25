@@ -2,13 +2,17 @@
  * Created by David on 9/24/16.
  */
 var taggedPlaces = new Array()
+var commonLocations = {}
+var locationAndHometown = {}
 function showplacesdata() {
     FB.api("/me?fields=location,hometown,tagged_places", function(response) {
         if (response.location) {
             console.log("Current Location: " + response.location.name)
+            locationAndHometown["location"] = response.location.name;
         }
         if (response.hometown) {
-            console.log("Current Location: " + response.location.name)
+            console.log("Hometown " + response.hometown.name)
+            locationAndHometown["hometown"] = response.hometown.name;
         }
         storeTaggedPlaces(response.tagged_places);
     });
@@ -64,6 +68,10 @@ function storeCities(response) {
 }
 
 function openMapsWindows() {
+    displayYears();
+    displayLocation();
+    displayOccurrences();
+    displayHometown();
     initMap();
     //window.open('http://localhost:8000/WebstormProjects/IStalkMe_HackGT2016/show.html?placeskey=' + taggedPlaces)
 }
@@ -116,6 +124,7 @@ function predominantCity(citieslist, year) {
         }
     }
     if (Object.keys(cities).length > 0) {
+        commonLocations[year] = [predominantCity, max];
         console.log("Predominant city " + year + " = " + predominantCity + ", with " + max + " occurrences.")
     }
 }

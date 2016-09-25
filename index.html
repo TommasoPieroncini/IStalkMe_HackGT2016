@@ -201,72 +201,153 @@
 
                 </div--><!-- End .sparkStats -->
 
-			</div>
+            </div>
 
-				<script type="text/javascript"
-						src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDkLkKfT_WOoI56v7O-hLh1HhXAHs_7QAQ
+                <div class="widget blue span5" id="commonYears" ontablet="span5" ondesktop="span5" style="width:20%;alignment:left">
+                    <h2> Period of time</h2>
+                    <hr>
+                    <div class="content" style="">
+                        <div id="years" style="">
+                            <script type="text/javascript">
+                                function displayYears() {
+                                    console.log(commonLocations);
+                                    var foo = Object.keys(commonLocations);
+                                    $("#years").append('<dl>');
+                                    for (var i = 0; i < foo.length; i++) {
+                                        $("#years").append("<dd>" + foo[i] + "</dd>");
+                                    }
+                                    $("#years").append('</dl>');
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget green span5" ontablet="span5" ondesktop="span5" style="width:25%;alignment:center">
+                    <h2> City most tagged in </h2>
+                    <hr>
+                    <div class="content" style="">
+                    <div id="location" style="">
+                        <script type="text/javascript">
+                            function displayLocation() {
+                                console.log(commonLocations);
+                                var foo = Object.keys(commonLocations);
+                                $("#location").append('<dl>');
+                                for (var i = 0; i < foo.length; i++) {
+                                    $("#location").append("<dd>" + commonLocations[foo[i]][0] + "</dd>");
+                                }
+                                $("#location").append('</dl>');
+                            }
+                        </script>
+                    </div>
+                </div>
+                    </div>
+                <div class="widget purple span5" ontablet="span5" ondesktop="span5" style="width:15%;alignment:right">
+                    <h2> Ocurrences </h2>
+                    <hr>
+                    <div class="content" style="">
+                        <div id="occurrences" style="">
+                            <script type="text/javascript">
+                                function displayOccurrences() {
+                                    console.log(commonLocations);
+                                    var foo = Object.keys(commonLocations);
+                                    $("#occurrences").append('<dl>');
+                                    for (var i = 0; i < foo.length; i++) {
+                                        $("#occurrences").append("<dd>" + commonLocations[foo[i]][1] + "</dd>");
+                                    }
+                                    $("#occurrences").append('</dl>');
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget orange span5" ontablet="span5" ondesktop="span5" style="width:20%;alignment:right">
+                    <h2> Hometown and Current Location </h2>
+                    <hr>
+                    <div class="content" style="">
+                        <div id="hometown" style="">
+                            <script type="text/javascript">
+                                function displayHometown() {
+                                    $("#hometown").append('<dl>');
+                                    if (locationAndHometown["location"]) {
+                                        $("#hometown").append("<dd>" + "Current Location: " + "</dd>");
+                                        $("#hometown").append("<dd>" + locationAndHometown["location"] + "</dd>");
+
+                                    }
+                                    if (locationAndHometown["hometown"]) {
+                                        $("#hometown").append("<dd>" + "Hometown: " + "</dd>");
+                                        $("#hometown").append("<dd>" + locationAndHometown["hometown"] + "</dd>");
+                                    }
+                                    $("#hometown").append('</dl>');
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDkLkKfT_WOoI56v7O-hLh1HhXAHs_7QAQ
     &q=Georgia+Institute+of+Technology" allowfullscreen>
 
-				</script>
-				<div style="overflow:hidden;height:500px;width:100%;align:center">
-					<div id="gmap_canvas" style="height:500px;width:100%;">
-						<style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
-					</div>
-				</div>
-				<script type="text/javascript">
-					function init_map(){
-						var myOptions = {
-							zoom:10,
-							center:new google.maps.LatLng(33.775671,-84.3985627),
-							mapTypeId: google.maps.MapTypeId.ROADMAP};
-						map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
-						marker = new google.maps.Marker({
-							map: map,
-							position: new google.maps.LatLng(33.775671,-84.3985627)});
-						google.maps.event.addListener(marker, "click", function() {
-							infowindow.open(map,marker);});
-						infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+                </script>
+                <div style="overflow:hidden;height:500px;width:100%;align:center">
+                    <div id="gmap_canvas" style="height:500px;width:100%;">
+                        <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function init_map(){
+                        var myOptions = {
+                            zoom:10,
+                            center:new google.maps.LatLng(33.775671,-84.3985627),
+                            mapTypeId: google.maps.MapTypeId.ROADMAP};
+                        map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
+                        marker = new google.maps.Marker({
+                            map: map,
+                            position: new google.maps.LatLng(33.775671,-84.3985627)});
+                        google.maps.event.addListener(marker, "click", function() {
+                            infowindow.open(map,marker);});
+                        infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
 
-				<script type="text/javascript">
-					function initMap() {
-						createMarkers(taggedPlaces);
-					}
-					function createMarkers(taggedPlaces) {
-						var latitudes = []
-						var longitudes = []
-						for (var marker in taggedPlaces) {
-						    if (taggedPlaces[marker].place.location) {
+                <script type="text/javascript">
+                    function initMap() {
+                        createMarkers(taggedPlaces);
+                    }
+                    function createMarkers(taggedPlaces) {
+                        var latitudes = []
+                        var longitudes = []
+                        for (var marker in taggedPlaces) {
+                            if (taggedPlaces[marker].place.location) {
                                 latitudes.push(taggedPlaces[marker].place.location.latitude)
                                 longitudes.push(taggedPlaces[marker].place.location.longitude)
                                 createMarker(taggedPlaces[marker].place.location.latitude, taggedPlaces[marker].place.location.longitude,
                                         taggedPlaces[marker].place.location.city);
                             }
-						}
-						var latitude = average(latitudes);
-						var longitude = average(longitudes);
-						map.setCenter({lat: latitude, lng: longitude});
-						map.zoom = 5;
-					}
-					function average(array) {
-						var sum = 0
-						for (var i = 0; i < array.length; i++) {
-							sum = sum + array[i]
-						}
-						if (array.length == 0) {
-						    return 0
                         }
-						return sum/parseFloat(array.length)
-					}
-					function createMarker(lat,lng,title) {
-						var myLatLng = {lat: lat, lng: lng}
-						var marker = new google.maps.Marker({
-							position: myLatLng,
-							map: map,
-							title: title
-						});
-						marker.setMap(map);
-					}
-				</script><div><br></div>
+                        var latitude = average(latitudes);
+                        var longitude = average(longitudes);
+                        map.setCenter({lat: latitude, lng: longitude});
+                        map.zoom = 5;
+                    }
+                    function average(array) {
+                        var sum = 0
+                        for (var i = 0; i < array.length; i++) {
+                            sum = sum + array[i]
+                        }
+                        if (array.length == 0) {
+                            return 0
+                        }
+                        return sum/parseFloat(array.length)
+                    }
+                    function createMarker(lat,lng,title) {
+                        var myLatLng = {lat: lat, lng: lng}
+                        var marker = new google.maps.Marker({
+                            position: myLatLng,
+                            map: map,
+                            title: title
+                        });
+                        marker.setMap(map);
+                    }
+                </script><div><br></div>
 
 
                 <div class="row-fluid">
@@ -391,7 +472,6 @@
 										</div>
 									</div>
 				</div></span>
-
 
 
 			</div>
