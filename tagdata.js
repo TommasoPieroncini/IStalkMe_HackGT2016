@@ -9,6 +9,17 @@ function getPhotos() {
     getData('/me/photos?fields=images,created_time');
 }
 
+function getData(next) {
+    if (next != null) {
+        FB.api(next, function(response) {
+            for (var i = 0; i < response.data.length; i++) {
+                getTags(response.data[i].images[0].source, response.data[i].created_time);
+            }
+            getData(response.paging.next);
+        });
+    }
+}
+
 function sortMaps() {
     console.log("TESTING");
     for (var year in tagsByYear) {
@@ -27,17 +38,6 @@ function sortMap(myMap, myUrlsMap) {
     });
     console.log(sortable);
     console.log(myUrlsMap);
-}
-
-function getData(next) {
-    if (next != null) {
-        FB.api(next, function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                getTags(response.data[i].images[0].source, response.data[i].created_time);
-            }
-            getData(response.paging.next);
-        });
-    }
 }
 
 function getTags(picUrl, created_time) {
