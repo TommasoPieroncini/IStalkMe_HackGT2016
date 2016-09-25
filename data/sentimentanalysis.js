@@ -78,6 +78,7 @@ function analyzeSentiment(year, str) {
 }
 
 function analyzeEmotion(year, str) {
+    console.log("analyzeEmotion");
     $.ajax({
         url: 'https://access.alchemyapi.com/calls/text/TextGetEmotion',
         dataType: 'jsonp',
@@ -153,10 +154,12 @@ function chunkString(str, length) {
     //console.log("Old:" + oldScore[year] + " - " + newScore);
 //}*/
 
-var counter = 0;
+var ran = false;
 function done() {
-    counter++;
-    if(counter == 2) {
+
+    if(!ran) {
+        ran = true;
+
         console.log("Sentiment:");
         for (var key in sentimentByYear) {
             console.log(key + " - " + Math.round(sentimentByYear[key]*100));
