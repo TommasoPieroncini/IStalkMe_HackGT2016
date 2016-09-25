@@ -37,12 +37,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="data/facebookdata.js" type="text/javascript"></script>
     <script src="data/sentimentanalysis.js" type="text/javascript"></script>
+	<script src="data/placesdata.js" type="text/javascript"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkLkKfT_WOoI56v7O-hLh1HhXAHs_7QAQ&callback=initMap"
+			async defer></script>
 
 
 
 </head>
 
-<body>
+<body onload="initMap()" style="height:100%">
 		<!-- start: Header -->
 	<div class="navbar">
 		<div class="navbar-inner">
@@ -90,6 +93,8 @@
 		</div>
 	</div>
 	<!-- start: Header -->
+
+
 
 		<div class="container-fluid-full">
 		<div class="row-fluid">
@@ -194,6 +199,65 @@
                 </div--><!-- End .sparkStats -->
 
 			</div>
+
+				<script type="text/javascript"
+						src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDkLkKfT_WOoI56v7O-hLh1HhXAHs_7QAQ
+    &q=Georgia+Institute+of+Technology" allowfullscreen>
+
+				</script>
+				<div style="overflow:hidden;height:500px;width:100%;align:center">
+					<div id="gmap_canvas" style="height:500px;width:100%;">
+						<style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
+					</div>
+				</div>
+				<script type="text/javascript">
+					function init_map(){
+						var myOptions = {
+							zoom:10,
+							center:new google.maps.LatLng(33.775671,-84.3985627),
+							mapTypeId: google.maps.MapTypeId.ROADMAP};
+						map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
+						marker = new google.maps.Marker({
+							map: map,
+							position: new google.maps.LatLng(33.775671,-84.3985627)});
+						google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});
+						infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+
+				<script type="text/javascript">
+					function initMap() {
+						createMarkers(taggedPlaces);
+					}
+					function createMarkers(taggedPlaces) {
+						var latitudes = []
+						var longitudes = []
+						for (var marker in taggedPlaces) {
+							latitudes.push(taggedPlaces[marker].place.location.latitude)
+							longitudes.push(taggedPlaces[marker].place.location.longitude)
+							createMarker(taggedPlaces[marker].place.location.latitude, taggedPlaces[marker].place.location.longitude,
+									taggedPlaces[marker].place.location.city);
+						}
+						var latitude = average(latitudes);
+						var longitude = average(longitudes);
+						map.setCenter({lat: latitude, lng: longitude});
+						map.zoom = 5;
+					}
+					function average(array) {
+						var sum = 0
+						for (var i = 0; i < array.length; i++) {
+							sum = sum + array[i]
+						}
+						return sum/parseFloat(array.length)
+					}
+					function createMarker(lat,lng,title) {
+						var myLatLng = {lat: lat, lng: lng}
+						var marker = new google.maps.Marker({
+							position: myLatLng,
+							map: map,
+							title: title
+						});
+						marker.setMap(map);
+					}
+				</script>>
 
 
                 <div class="row-fluid">
@@ -460,7 +524,8 @@
 		</div><!--/#content.span10-->
 		</div><!--/fluid-row-->
 
-	<div class="modal hide fade" id="myModal">
+
+		<div class="modal hide fade" id="myModal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">×</button>
 			<h3>Settings</h3>
