@@ -24,8 +24,6 @@ function testSentiment(property) {
                 }
             }
         }
-        document.getElementById('status').innerHTML =
-            'This is the second time wuhuuu !';
 
     });
 }
