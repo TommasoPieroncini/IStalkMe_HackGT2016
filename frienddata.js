@@ -1,68 +1,40 @@
 var photoIDs = new Set();
 
-//Photo Likes
-var photoLikesMap = {};
-var photoLikesArray = [];
-var photoLikesArraySize = 0;
+// Likes
+var likesMap = new Map();
 
-//Photo Comments
-var photoCommentsMap = {};
-var photoCommentsArray = [];
-var photoCommentsArraySize = 0;
+//Comments
+var commentsMap =  new Map();
+var commentsArray = [];
+var commentsArraySize = 0;
 
 //Shared Tagged Photos
-var tagsMap = {};
+var tagsMap =  new Map();
 var tagsArray = [];
 var tagsArraySize = 0;
 
-//Post Likes
-var postLikesMap = {};
-var postLikesArray = [];
-var postLikesArraySize = 0;
-
-//Post Comments
-var postCommentsMap = {};
-var postCommentsArray = [];
-var postCommentsArraySize = [];
 
 function getFriendData() {
     //Photo Likes and Comments
     var page = '/me/photos';
     iteratePhotos(page);
-    var page2 = 'me/photos/uploaded';
+    var page2 = '/me/photos/uploaded';
     iteratePhotos(page2);
-    console.log(photoLikesMap);
-    console.log(photoCommentsMap);
-    // console.log(likesMap);
-    // console.log(likesPhotoIDs);
-    // console.log(likesArray);
-    // likesArray.sort(function(key1,key2) {
-    //         if (likesMap[key1] > likesMap[key2]) {
-    //             return 1;
-    //         }
-    //         if (likesMap[key1] < likesMap[key2]) {
-    //             return -1;
-    //         }
-    //         return 0;
-    //     });
-    // for (var i = 0; i < likesArraySize; i++) {
-    //     console.log(likesArray[i].concat(' : ').concat(likesMap[likesArray[i]]));
-    // }
-    //Post Likes and Comments
 
     //Post Likes and Comments
-    var page3 = 'me/posts';
+    var page3 = '/me/posts';
     iteratePosts(page3);
-    console.log(postLikesMap);
-    console.log(postCommentsMap);
+    console.log(likesMap);
+    console.log(commentsMap);
 
     //Shared Tags
-    var page4 = 'me/photos';
+    var page4 = '/me/photos';
     iterateSharedTagsPhotos(page4);
     console.log(tagsMap);
 
 }
 function iteratePhotos(page) {
+    console.log('iteratePhotos running');
     if (page != null) {
         FB.api(page, function(response) {
             if (response.data != null && response.data.length != 0) {
@@ -85,9 +57,11 @@ function iteratePhotos(page) {
 }
 
 function iteratePhotoLikes(photo) {
+    console.log('iteratePhotoLikes running');
     if (photo != null) {
         FB.api((photo.id) + '/likes', function(response) {
             if (response.data != null && response.data.length != 0) {
+                console.log("iteratePhotoLikes has valid data")
                 for (var i = 0; i < response.data.length; i++) {
                     var like = response.data[i];
                     getPhotoLikes(like);
@@ -101,12 +75,12 @@ function iteratePhotoLikes(photo) {
 }
 
 function getPhotoLikes(like) {
-    if (like.name in photoLikesMap) {
-        photoLikesMap[like.name] = photoLikesMap[like.name] + 1;
+    console.log('getPhotoLikes running');
+    if (likesMap.has(like.name)) {
+        likesMap.set(like.name, likesMap.get(like.name) + 1);
     } else {
-        photoLikesMap[like.name] = 1;
-        photoLikesArray[photoLikesArraySize] = like.name;
-        photoLikesArray++;
+        console.log("Added like to map");
+        likesMap.set(like.name,1);
     }
 }
 
@@ -127,31 +101,14 @@ function iteratePhotoComments(photo) {
 }
 
 function getPhotoComments(comment) {
-    if (comment.from.name in photoCommentsMap) {
-        photoCommentsMap[comment.from.name] = photoCommentsMap[comment.from.name] + 1;
+    if (comment.from.name in commentsMap) {
+        commentsMap[comment.from.name] = commentsMap[comment.from.name] + 1;
     } else {
-        photoCommentsMap[comment.from.name] = 1;
-        photoCommentsArray[photoCommentsArraySize] = comment.from.name;
-        photoCommentsArray++;
+        commentsMap[comment.from.name] = 1;
+        commentsArray[commentsArraySize] = comment.from.name;
+        commentsArraySize++;
     }
 }
-// function getPhotoLikes(photo) {
-//     //console.log('Running getPhotoLikes');
-//     //console.log(photo.id);
-//     FB.api('/'.concat((photo.id).toString()).concat('/likes'), function(response) {
-//         //console.log('Running Likes');
-//         //console.log(response.data.length);
-//         for (var i = 0; i < response.data.length; i++) {
-//             if (response.data[i].name in photoLikesMap) {
-//                 photoLikesMap[response.data[i].name] =  photoLikesMap[response.data[i].name] + 1;
-//             } else {
-//                 photoLikesMap[response.data[i].name] = 1;
-//                 photoLikesArray[photoLikesArraySize] = response.data[i].name;
-//                 photoLikesArraySize++;
-//             }
-//         }
-//     });
-// }
 
 //Shared Tagged Photos
 function iterateSharedTagsPhotos(page) {
@@ -197,20 +154,6 @@ function getSharedTag(tag) {
     }
 }
 
-// function getSharedTags(photo) {
-//     FB.api('/'.concat((photo.id).toString()).concat('/tags'), function(response) {
-//         for (var i = 0; i < response.data.length; i++) {
-//             if (response.data[i].name in tagsMap) {
-//                 tagsMap[response.data[i].name] =  tagsMap[response.data[i].name] + 1;
-//             } else {
-//                 tagsMap[response.data[i].name] = 1;
-//                 tagsArray[tagsArraySize] = response.data[i].name;
-//                 tagsArraySize++;
-//             }
-//         }
-//     });
-// }
-
 function iteratePosts(page) {
     if (page != null) {
         FB.api(page, function(response) {
@@ -245,28 +188,14 @@ function iteratePostLikes(post) {
 }
 
 function getPostLikes(like) {
-    if (like.name in postLikesMap) {
-        postLikesMap[like.name] = postLikesMap[like.name] + 1;
+    if (like.name in likesMap) {
+        likesMap[like.name] = likesMap[like.name] + 1;
     } else {
-        postLikesMap[like.name] = 1;
-        postLikesArray[postLikesArraySize] = like.name;
-        postLikesArraySize++;
+        likesMap[like.name] = 1;
+        likesArray[likesArraySize] = like.name;
+        likesArraySize++;
     }
 }
-
-// function getPostLikes(post) {
-//     FB.api('/'.concat((post.id).toString()).concat('/likes'), function(response) {
-//         for (var i = 0; i < response.data.length; i++) {
-//             if (response.data[i].name in tagsMap) {
-//                 tagsMap[response.data[i].name] =  tagsMap[response.data[i].name] + 1;
-//             } else {
-//                 tagsMap[response.data[i].name] = 1;
-//                 tagsArray[tagsArraySize] = response.data[i].name;
-//                 tagsArraySize++;
-//             }
-//         }
-//     });
-// }
 
 function iteratePostComments(post) {
     if (post != null) {
@@ -285,12 +214,12 @@ function iteratePostComments(post) {
 }
 
 function getPostComments(comment) {
-    if (comment.from.name in postCommentsMap) {
-        postCommentsMap[comment.from.name] = postCommentsMap[comment.from.name] + 1;
+    if (comment.from.name in commentsMap) {
+        commentsMap[comment.from.name] = commentsMap[comment.from.name] + 1;
     } else {
-        postCommentsMap[comment.from.name] = 1;
-        postCommentsArray[postCommentsArraySize] = comment.from.name;
-        postCommentsArraySize++;
+        commentsMap[comment.from.name] = 1;
+        commentsArray[commentsArraySize] = comment.from.name;
+        commentsArraySize++;
     }
 }
 
