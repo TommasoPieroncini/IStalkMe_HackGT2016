@@ -91,7 +91,7 @@ function predominantCity(citieslist, year) {
     var cities = {}
     for (var i = 0; i < citieslist.length; i++) {
 
-        if (cities[i].place && cities[i].place.location && cities[i].place.location.city) {
+        if (cities[i] && cities[i].place && cities[i].place.location && cities[i].place.location.city) {
             var city = citieslist[i].place.location.city
             if (city in cities) {
                 cities[city] = cities[city] + 1
