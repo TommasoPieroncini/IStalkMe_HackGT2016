@@ -1,18 +1,13 @@
 var photoIDs = new Set();
 
-// Likes
-var likesMap = new Map();
+//Master Year Maps
+var likesYearMap = new Map();
+var commentsYearMap = new Map();
+var tagsYearMap = new Map();
 
-//Comments
-var commentsMap =  new Map();
-var commentsArray = [];
-var commentsArraySize = 0;
-
-//Shared Tagged Photos
-var tagsMap =  new Map();
-var tagsArray = [];
-var tagsArraySize = 0;
-
+console.log(likesYearMap);
+console.log(commentsYearMap);
+console.log(tagsYearMap);
 
 function getFriendData() {
     //Photo Likes and Comments
@@ -24,17 +19,15 @@ function getFriendData() {
     //Post Likes and Comments
     var page3 = '/me/posts';
     iteratePosts(page3);
-    console.log(likesMap);
-    console.log(commentsMap);
 
     //Shared Tags
     var page4 = '/me/photos';
     iterateSharedTagsPhotos(page4);
-    console.log(tagsMap);
+
+    sortMaps();
 
 }
 function iteratePhotos(page) {
-    console.log('iteratePhotos running');
     if (page != null) {
         FB.api(page, function(response) {
             if (response.data != null && response.data.length != 0) {
@@ -57,14 +50,13 @@ function iteratePhotos(page) {
 }
 
 function iteratePhotoLikes(photo) {
-    console.log('iteratePhotoLikes running');
     if (photo != null) {
         FB.api((photo.id) + '/likes', function(response) {
             if (response.data != null && response.data.length != 0) {
-                console.log("iteratePhotoLikes has valid data")
                 for (var i = 0; i < response.data.length; i++) {
                     var like = response.data[i];
-                    getPhotoLikes(like);
+                    var year = photo.created_time.substring(0,4);
+                    getPhotoLikes(like,year);
                 }
                 iteratePhotoLikes(response.paging.next);
             }
@@ -74,13 +66,14 @@ function iteratePhotoLikes(photo) {
     }
 }
 
-function getPhotoLikes(like) {
-    console.log('getPhotoLikes running');
-    if (likesMap.has(like.name)) {
-        likesMap.set(like.name, likesMap.get(like.name) + 1);
+function getPhotoLikes(like,year) {
+    if (!likesYearMap.has(year)) {
+        likesYearMap.set(year, new Map());
+    }
+    if (likesYearMap.get(year).has(like.name)) {
+        likesYearMap.get(year).set(like.name, (likesYearMap.get(year).get(like.name) + 1));
     } else {
-        console.log("Added like to map");
-        likesMap.set(like.name,1);
+        likesYearMap.get(year).set(like.name,1);
     }
 }
 
@@ -101,12 +94,14 @@ function iteratePhotoComments(photo) {
 }
 
 function getPhotoComments(comment) {
-    if (comment.from.name in commentsMap) {
-        commentsMap[comment.from.name] = commentsMap[comment.from.name] + 1;
+    var year = comment.created_time.substring(0,4);
+    if (!commentsYearMap.has(year)) {
+        commentsYearMap.set(year, new Map());
+    }
+    if (commentsYearMap.get(year).has(comment.from.name)) {
+        commentsYearMap.get(year).set(comment.from.name, (commentsYearMap.get(year).get(comment.from.name)) + 1);
     } else {
-        commentsMap[comment.from.name] = 1;
-        commentsArray[commentsArraySize] = comment.from.name;
-        commentsArraySize++;
+        commentsYearMap.get(year).set(comment.from.name,1);
     }
 }
 
@@ -134,7 +129,8 @@ function iterateSharedTags(photo) {
             if (response.data != null && response.data.length != 0) {
                 for (var i = 0; i < response.data.length; i++) {
                     var tag = response.data[i];
-                    getSharedTag(tag);
+                    var year = photo.created_time.substring(0,4);
+                    getSharedTag(tag,year);
                 }
                 iterateSharedTags(response.paging.next);
             }
@@ -144,13 +140,14 @@ function iterateSharedTags(photo) {
     }
 }
 
-function getSharedTag(tag) {
-    if (tag.name in tagsMap) {
-        tagsMap[tag.name] = tagsMap[tag.name] + 1;
+function getSharedTag(tag,year) {
+    if (!tagsYearMap.has(year)) {
+        tagsYearMap.set(year, new Map());
+    }
+    if (tagsYearMap.get(year).has(tag.name)) {
+        tagsYearMap.get(year).set(tag.name, (tagsYearMap.get(year).get(tag.name)) + 1);
     } else {
-        tagsMap[tag.name] = 1;
-        tagsArray[tagsArraySize] = tag.name;
-        tagsArraySize++;
+        tagsYearMap.get(year).set(tag.name,1);
     }
 }
 
@@ -177,7 +174,8 @@ function iteratePostLikes(post) {
             if (response.data != null && response.data.length != 0) {
                 for (var i = 0; i < response.data.length; i++) {
                     var like = response.data[i];
-                    getPostLikes(like);
+                    var year = post.created_time.substring(0,4);
+                    getPostLikes(like,year);
                 }
                 iteratePostLikes(response.paging.next);
             }
@@ -187,13 +185,14 @@ function iteratePostLikes(post) {
     }
 }
 
-function getPostLikes(like) {
-    if (like.name in likesMap) {
-        likesMap[like.name] = likesMap[like.name] + 1;
+function getPostLikes(like,year) {
+    if (!likesYearMap.has(year)) {
+        likesYearMap.set(year, new Map());
+    }
+    if (likesYearMap.get(year).has(like.name)) {
+        likesYearMap.get(year).set(like.name, likesYearMap.get(year).get(like.name) + 1);
     } else {
-        likesMap[like.name] = 1;
-        likesArray[likesArraySize] = like.name;
-        likesArraySize++;
+        likesYearMap.get(year).set(like.name, 1);
     }
 }
 
@@ -214,12 +213,44 @@ function iteratePostComments(post) {
 }
 
 function getPostComments(comment) {
-    if (comment.from.name in commentsMap) {
-        commentsMap[comment.from.name] = commentsMap[comment.from.name] + 1;
-    } else {
-        commentsMap[comment.from.name] = 1;
-        commentsArray[commentsArraySize] = comment.from.name;
-        commentsArraySize++;
+    var year = comment.created_time.substring(0,4);
+    if (!commentsYearMap.has(year)) {
+        commentsYearMap.set(year, new Map());
     }
+    if (commentsYearMap.get(year).has(comment.from.name)) {
+        commentsYearMap.get(year).set(comment.from.name, (commentsYearMap.get(year).get(comment.from.name)) + 1);
+    } else {
+        commentsYearMap.get(year).set(comment.from.name, 1);
+    }
+}
+
+function sortMaps() {
+    console.log("ran sortMaps");
+    likesYearMap.forEach(function(v,k) {
+        console.log("sortMap(likesYearMap)");
+        sortMap(v);
+    });
+    commentsYearMap.forEach(function(v,k) {
+        console.log("sortMap(commentsYearMap)");
+        sortMap(v);
+    });
+    tagsYearMap.forEach(function(v,k) {
+        console.log("sortMap(tagsYearMap)");
+        sortMap(v);
+    });
+
+
+}
+
+function sortMap(map) {
+    console.log("ran sortMap");
+    var sortable = [];
+    map.forEach(function(v,k) {
+        sortable.push([k,v]);
+    });
+    sortable.sort(function(a,b) {
+        return b[1] - a[1];
+    });
+    console.log(sortable);
 }
 
