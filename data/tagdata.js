@@ -54,7 +54,7 @@ function getTags(picUrl, created_time) {
             //console.log(year);
             if (tagsByYear[year].has(arg)) {
                 tagsByYear[year].set(arg, tagsByYear[year].get(arg) + 1);
-                if (urlsByTag[year].get(arg).length < 6) {
+                if (urlsByTag[year].get(arg).length < 10) {
                     urlsByTag[year].get(arg).push(picUrl);
                 }
             } else {
