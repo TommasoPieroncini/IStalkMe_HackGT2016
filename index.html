@@ -603,9 +603,10 @@
 	<!-- end: JavaScript-->
 
         <script>
-            $(window).on('load', function() {
-                document.getElementById("angerValue").innerHTML=angerByYear[2013];
-            });
+            function displayData() {
+                console.log("afterwards");
+                document.getElementById("angerValue").innerHTML=Math.round(angerByYear[2013]*100)+'%';
+            }
         </script>
 
 </body>
