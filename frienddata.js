@@ -23,8 +23,11 @@ function getFriendData() {
     //Shared Tags
     var page4 = '/me/photos';
     iterateSharedTagsPhotos(page4);
+<<<<<<< HEAD
 
     sortMaps();
+=======
+>>>>>>> c88dd490f27fa5871b77b24814ddd8c6936582b3
 
 }
 function iteratePhotos(page) {
@@ -67,6 +70,7 @@ function iteratePhotoLikes(photo) {
 }
 
 function getPhotoLikes(like,year) {
+<<<<<<< HEAD
     if (!likesYearMap.has(year)) {
         likesYearMap.set(year, new Map());
     }
@@ -74,6 +78,20 @@ function getPhotoLikes(like,year) {
         likesYearMap.get(year).set(like.name, (likesYearMap.get(year).get(like.name) + 1));
     } else {
         likesYearMap.get(year).set(like.name,1);
+=======
+    console.log(year);
+    console.log(likesYearMap.has(year));
+    if (!likesYearMap.has(year)) {
+        likesYearMap.set(year, new Map());
+        console.log("added year to likesYearMap");
+    }
+    if (likesYearMap.get(year).has(like.name)) {
+        likesYearMap.get(year).set(like.name, (likesYearMap.get(year).get(like.name) + 1));
+        console.log("increased existing name to likesYearMap");
+    } else {
+        likesYearMap.get(year).set(like.name,1);
+        console.log("added new name to likesYearMap");
+>>>>>>> c88dd490f27fa5871b77b24814ddd8c6936582b3
     }
 }
 
@@ -186,8 +204,16 @@ function iteratePostLikes(post) {
 }
 
 function getPostLikes(like,year) {
+<<<<<<< HEAD
     if (!likesYearMap.has(year)) {
         likesYearMap.set(year, new Map());
+=======
+    console.log("Ran getPostLikes");
+    console.log(likesYearMap.has(year));
+    if (!likesYearMap.has(year)) {
+        likesYearMap.set(year, new Map());
+        console.log("added year to likesYearMap from posts");
+>>>>>>> c88dd490f27fa5871b77b24814ddd8c6936582b3
     }
     if (likesYearMap.get(year).has(like.name)) {
         likesYearMap.get(year).set(like.name, likesYearMap.get(year).get(like.name) + 1);
