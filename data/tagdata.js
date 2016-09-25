@@ -4,7 +4,7 @@
 var counter = 0;
 var tagsByYear = new Map();
 var urlsByTag = new Map();
-var yearlyTags = {};
+var yearlyTags = new Map();
 function getAllTags() {
     console.log('Fetching photo information.... ');
     getData('/me/photos?fields=images,created_time');
@@ -25,11 +25,11 @@ function sortMaps() {
     //console.log("TESTING");
     for (var year in tagsByYear) {
         //console.log(year);
-        yearlyTags[year] = sortMap(tagsByYear[year], urlsByTag[year]);
+        yearlyTags[year] = sortMap(tagsByYear[year]);
     }
 }
 
-function sortMap(myMap, myUrlsMap) {
+function sortMap(myMap) {
     var sortable = [];
     myMap.forEach(function(v, k) {
         sortable.push([k, v]);
@@ -37,14 +37,13 @@ function sortMap(myMap, myUrlsMap) {
     sortable.sort(function(a, b) {
         return b[1] - a[1];
     });
-    console.log(sortable);
+    //console.log(sortable);
     return sortable;
-    //console.log(myUrlsMap);
 }
 
 function getTags(picUrl, created_time) {
     var year = created_time.substring(0, 4);
-    var clarifaiAccessToken = 'YEM1LXZHfYsa0XXeeFNs6bO175P5rn';
+    var clarifaiAccessToken = 'PVCD2d04SVRazNPOod5JIhWf5gOovJ';
     var encodedUrl = encodeURIComponent(picUrl);
     if (!tagsByYear.hasOwnProperty(year)) {
         tagsByYear[year] = new Map();
@@ -67,6 +66,11 @@ function getTags(picUrl, created_time) {
         counter++;
         console.log(counter);
         sortMaps();
-        displayTags();
     });
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
 }

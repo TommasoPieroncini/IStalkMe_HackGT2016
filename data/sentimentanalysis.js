@@ -186,5 +186,6 @@ function done() {
         displayAngerData();
         displayDisgustData();
         displayFearData();
+        displayTags();
     }
 }
