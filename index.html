@@ -340,13 +340,18 @@
                         <div class="box-content">
                             <table id="tagsTable" class="table table-bordered table-striped">
                                 <script>
-                                    for (var year in yearlyTags) {
-                                        for (var i = 0; i < 2; i++) {
-                                            $("#tagsTable").append('<tr>');
-                                            for (var i = 0; i < 6; i++) {
-                                                $("#tagsTable").append("<td><a href='#' class='btn btn-danger' data-rel='popover' title='title' data-content=" + tagsByYear[year][i][0]+ ">tagsByYear[year][i][0]</a>");
+                                    function displayTags() {
+                                        console.log("YEAHHH");
+                                        for (var year in yearlyTags) {
+                                            console.log("try" + yearlyTags[year]);
+                                            for (var i = 0; i < 2; i++) {
+                                                $("#tagsTable").append('<tr>');
+                                                for (var i = 0; i < 6; i++) {
+                                                    //console.log(yearlyTags[year]);
+                                                    $("#tagsTable").append("<td><a href='#' class='btn btn-danger' data-rel='popover' title='title' data-content=" + tagsByYear[year][i][0] + ">tagsByYear[year][i][0]</a>");
+                                                }
+                                                $("#tagsTable").append('</tr>');
                                             }
-                                            $("#tagsTable").append('</tr>');
                                         }
                                     }
                                 </script>
