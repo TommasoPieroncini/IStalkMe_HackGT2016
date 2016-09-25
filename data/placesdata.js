@@ -90,25 +90,27 @@ function predominantCityPerYear(yearToCityMap, years) {
 function predominantCity(citieslist, year) {
     var cities = {}
     for (var i = 0; i < citieslist.length; i++) {
-        var city = citieslist[i].place.location.city
-        if (city in cities) {
-            cities[city] = cities[city] + 1
-        } else {
-            cities[city] = 1
+        if (cities[i].place.location.city) {
+            var city = citieslist[i].place.location.city
+            if (city in cities) {
+                cities[city] = cities[city] + 1
+            } else {
+                cities[city] = 1
+            }
         }
     }
     if (Object.keys(cities).length > 0) {
         var max = cities[Object.keys(cities)[0]];
         var predominantCity = Object.keys(cities)[0]
-    }
-    for (var key in Object.keys(cities)) {
-        if (cities[Object.keys(cities)[key]] > max) {
-            max = cities[Object.keys(cities)[key]];
-            predominantCity = Object.keys(cities)[key]
-        } else if (cities[Object.keys(cities)[key]] == max) {
-            if (predominantCity.localeCompare(Object.keys(cities)[key]) != 0) {
-                predominantCity = predominantCity.concat(", ")
-                predominantCity = predominantCity.concat(Object.keys(cities)[key])
+        for (var key in Object.keys(cities)) {
+            if (cities[Object.keys(cities)[key]] > max) {
+                max = cities[Object.keys(cities)[key]];
+                predominantCity = Object.keys(cities)[key]
+            } else if (cities[Object.keys(cities)[key]] == max) {
+                if (predominantCity.localeCompare(Object.keys(cities)[key]) != 0) {
+                    predominantCity = predominantCity.concat(", ")
+                    predominantCity = predominantCity.concat(Object.keys(cities)[key])
+                }
             }
         }
     }
