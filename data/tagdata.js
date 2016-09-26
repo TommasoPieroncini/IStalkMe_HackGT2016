@@ -22,9 +22,9 @@ function getData(next) {
 }
 
 function sortMaps() {
-    //console.log("TESTING");
+    console.log("TESTING");
     for (var year in tagsByYear) {
-        //console.log(year);
+        console.log(year);
         yearlyTags[year] = sortMap(tagsByYear[year]);
     }
 }
