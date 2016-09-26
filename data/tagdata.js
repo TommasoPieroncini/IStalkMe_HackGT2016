@@ -16,7 +16,9 @@ function getData(next) {
             for (var i = 0; i < response.data.length; i++) {
                 getTags(response.data[i].images[0].source, response.data[i].created_time);
             }
-            getData(response.paging.next);
+            if (response.paging != null) {
+                getData(response.paging.next);
+            }
         });
     }
 }
