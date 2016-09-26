@@ -497,6 +497,7 @@
 									function displayTags() {
 										console.log("TEST in html");
 										for (var year in yearlyTags) {
+											console.log(yearlyTags[year][i][0]);
 											for (var i = 0; i < 12; i++) {
 												if (i == 0 || i == 6) {
 													$("#tagsTable").append('<tr>');
