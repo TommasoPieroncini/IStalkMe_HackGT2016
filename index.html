@@ -70,7 +70,7 @@
 
                                 <fb:login-button size="xlarge" autologoutlink="true" style="position: absolute; left: -150px; padding-top:4px;"
 
-                                                 scope="public_profile,email,user_posts,user_status,user_location,user_tagged_places" onlogin="checkLoginState();">
+                                                 scope="public_profile,email,user_posts,user_status,user_location,user_tagged_places,user_photos" onlogin="checkLoginState();">
                                 </fb:login-button>
 
 								<!--span class="caret"></span-->
@@ -496,9 +496,9 @@
 									var buttons = ["btn btn-primary","btn btn-success","btn btn-info","btn btn-warning","btn btn-danger"];
 									function displayTags() {
 										console.log("TEST in html");
-										console.log(yearlyTags);
+										//console.log(yearlyTags);
 										for (var year in yearlyTags) {
-											console.log(yearlyTags[year][i][0]);
+											//console.log(yearlyTags[year][i][0]);
 											for (var i = 0; i < 12; i++) {
 												if (i == 0 || i == 6) {
 													$("#tagsTable").append('<tr>');
