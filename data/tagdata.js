@@ -11,6 +11,7 @@ function getAllTags() {
 }
 
 function getData(next) {
+    console.log("data!");
     if (next != null) {
         FB.api(next, function(response) {
             for (var i = 0; i < response.data.length; i++) {
@@ -18,6 +19,8 @@ function getData(next) {
             }
             if (response.paging != null) {
                 getData(response.paging.next);
+            } else {
+                console.log("TESTING_null_paging");
             }
         });
     }
