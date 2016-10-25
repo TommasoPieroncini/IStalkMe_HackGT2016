@@ -2,9 +2,9 @@
  * Created by Tommaso on 9/24/2016.
  */
 var counter = 0;
-var tagsByYear = new Map();
-var urlsByTag = new Map();
-var yearlyTags = new Map();
+var tagsByYear = new {};
+var urlsByTag = new {};
+var yearlyTags = new {};
 function getAllTags() {
     console.log('Fetching photo information.... ');
     getData('/me/photos?fields=images,created_time');
@@ -27,7 +27,7 @@ function getData(next) {
 }
 
 function sortMaps() {
-    console.log("TESTING");
+    //console.log("TESTING");
     for (var year in tagsByYear) {
         //console.log(year);
         yearlyTags[year] = sortMap(tagsByYear[year]);
