@@ -41,7 +41,7 @@ function sortMap(myMap) {
 
 function getTags(picUrl, created_time) {
     var year = created_time.substring(0, 4);
-    var clarifaiAccessToken = 'AZzXXBkzGSocf2PLif90xk9T3lZVII';
+    var clarifaiAccessToken = 'BhzcgzlvB2zZdfJR9YPgILfk1QTVoN';
     var encodedUrl = encodeURIComponent(picUrl);
     if (!tagsByYear.hasOwnProperty(year)) {
         tagsByYear[year] = new Map();
