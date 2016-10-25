@@ -507,7 +507,7 @@
 													$("#tagsTable").append('<tr>');
 												}
 												if (yearlyTags[year][i] != null) {
-													$("#tagsTable").append("<td><a href=" + (urlsByTag[year].get(yearlyTags[year][i][0]))[getRandomInt(0,urlsByTag[year].get(yearlyTags[year][i][0]).length - 1)] + " target='_blank' class='"+ buttons[getRandomInt(0,5)] +"' data-rel='popover' title data-original-title=" + yearlyTags[year][i][0] + " data-content=" + yearlyTags[year][i][0] + ">"+ yearlyTags[year][i][0] +"</a><p>"+ year +"</p>");
+													$("#tagsTable").append("<td><a href=" + (urlsByTag[year].get(yearlyTags[year][i][0]))[getRandomInt(0, urlsByTag[year].get(yearlyTags[year][i][0]).length - 1)] + " target='_blank' class='"+ buttons[getRandomInt(0,5)] +"' data-rel='popover' title data-original-title=" + yearlyTags[year][i][0] + " data-content=" + yearlyTags[year][i][0] + " -- " + year + ">"+ yearlyTags[year][i][0] +"</a>");
 												}
 												if (i == 0 || i == 6) {
 													$("#tagsTable").append('</tr>');

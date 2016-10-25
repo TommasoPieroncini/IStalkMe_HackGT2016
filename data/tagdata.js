@@ -1,7 +1,6 @@
 /**
  * Created by Tommaso on 9/24/2016.
  */
-var counter = 0;
 var tagsByYear = {};
 var urlsByTag = {};
 var yearlyTags = {};
@@ -11,7 +10,6 @@ function getAllTags() {
 }
 
 function getData(next) {
-    //console.log("data!");
     if (next != null) {
         FB.api(next, function(response) {
             for (var i = 0; i < response.data.length; i++) {
@@ -19,17 +17,13 @@ function getData(next) {
             }
             if (response.paging != null) {
                 getData(response.paging.next);
-            } else {
-                //console.log("TESTING_null_paging");
             }
         });
     }
 }
 
 function sortMaps() {
-    //console.log("TESTING");
     for (var year in tagsByYear) {
-        //console.log(year);
         yearlyTags[year] = sortMap(tagsByYear[year]);
     }
 }
@@ -42,7 +36,6 @@ function sortMap(myMap) {
     sortable.sort(function(a, b) {
         return b[1] - a[1];
     });
-    //console.log(sortable);
     return sortable;
 }
 
@@ -55,21 +48,18 @@ function getTags(picUrl, created_time) {
         urlsByTag[year] = new Map();
     }
     $.get('https://api.clarifai.com/v1/tag/?access_token=' + clarifaiAccessToken + '&url=' + encodedUrl, function(response) {
-        response.results[0].result.tag.classes.forEach(function (arg){
-            //console.log(year);
-            if (tagsByYear[year].has(arg)) {
-                tagsByYear[year].set(arg, tagsByYear[year].get(arg) + 1);
-                if (urlsByTag[year].get(arg).length < 100) {
-                    urlsByTag[year].get(arg).push(picUrl);
+        response.results[0].result.tag.classes.forEach(function (tag){
+            if (tagsByYear[year].has(tag)) {
+                tagsByYear[year].set(tag, tagsByYear[year].get(tag) + 1);
+                if (urlsByTag[year].get(tag).length < 100) {
+                    urlsByTag[year].get(tag).push(picUrl);
                 }
             } else {
-                tagsByYear[year].set(arg, 1);
-                urlsByTag[year].set(arg, [picUrl]);
+                tagsByYear[year].set(tag, 1);
+                urlsByTag[year].set(tag, [picUrl]);
             }
         });
     }).done(function() {
-        counter++;
-        //console.log(counter);
         sortMaps();
     });
 }
