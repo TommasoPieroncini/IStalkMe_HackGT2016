@@ -2,16 +2,16 @@
  * Created by Tommaso on 9/24/2016.
  */
 var counter = 0;
-var tagsByYear = new {};
-var urlsByTag = new {};
-var yearlyTags = new {};
+var tagsByYear = {};
+var urlsByTag = {};
+var yearlyTags = {};
 function getAllTags() {
     console.log('Fetching photo information.... ');
     getData('/me/photos?fields=images,created_time');
 }
 
 function getData(next) {
-    console.log("data!");
+    //console.log("data!");
     if (next != null) {
         FB.api(next, function(response) {
             for (var i = 0; i < response.data.length; i++) {
@@ -20,7 +20,7 @@ function getData(next) {
             if (response.paging != null) {
                 getData(response.paging.next);
             } else {
-                console.log("TESTING_null_paging");
+                //console.log("TESTING_null_paging");
             }
         });
     }
