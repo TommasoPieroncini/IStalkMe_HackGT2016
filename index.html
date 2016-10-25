@@ -389,6 +389,9 @@
                                         for (var key in sadnessByYear) {
                                             counter++;
                                             $("#sadchart").append('<div class="singleBar" style="width: 40px; margin: 5px"><div class="bar"><div class="value" style="height: '+Math.round(sadnessByYear[key]*100)+'%;"> <span style="color: rgb(226, 90, 89); display: inline;">'+Math.round(sadnessByYear[key]*100)+'%</span> </div> </div> <div class="title">'+key+'</div> </div>');
+											if(Math.round(sadnessByYear[key]*100) > 20) {
+												console.log("You're a SAD CAT!");
+											}
                                         }
                                         var w = 65 * counter;
                                         if (counter < 3) {
